@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ursasi · Agent Systems</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --bg2: #101c33;
+    --card: #111f38;
+    --line: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #93c5fd;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 80px; }
+
+  nav { display: flex; gap: 24px; padding: 24px 0; font-size: 15px; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--accent); }
+
+  header { padding: 48px 0 40px; }
+  header h1 { font-size: 42px; font-weight: 700; letter-spacing: -0.5px; }
+  header p { margin-top: 12px; font-size: 18px; color: var(--muted); max-width: 640px; }
+  header .hl { color: var(--accent); }
+
+  .banner { width: 100%; border-radius: 14px; border: 1px solid var(--line); margin: 8px 0 40px; display: block; }
+
+  h2 { font-size: 22px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } header h1 { font-size: 32px; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+  .card h3 { font-size: 16px; margin-bottom: 6px; }
+  .card p { font-size: 14.5px; color: var(--muted); }
+  .card a { color: var(--accent); text-decoration: none; }
+  .card a:hover { text-decoration: underline; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tag {
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 16px; font-size: 14px; color: var(--text);
+  }
+  .group { margin-bottom: 14px; font-size: 14px; color: var(--muted); }
+  .group b { color: var(--text); font-weight: 600; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <a href="#work">工作</a>
+    <a href="#projects">项目</a>
+    <a href="#toolbox">工具箱</a>
+    <a href="#contact">联系</a>
+  </nav>
+
+  <header>
+    <h1>Ursasi</h1>
+    <p>专注 <span class="hl">LLM Agent</span> —— 工具调用、编排、评测，以及让 Agent 可靠到值得信任。</p>
+  </header>
+
+  <img class="banner" src="agent-loop.svg" alt="Agent loop: plan → act → observe → evaluate">
+
+  <h2 id="work">当前工作</h2>
+  <div class="cards">
+    <div class="card"><h3>Agent 运行时</h3><p>规划 / 工具调用循环、上下文窗口管理、Agent 记忆。</p></div>
+    <div class="card"><h3>工具使用 &amp; MCP</h3><p>工具集成、沙箱执行、协议层的管道工作。</p></div>
+    <div class="card"><h3>评测</h3><p>Prompt 与工具行为的回归测试、基于 trace 的调试。</p></div>
+    <div class="card"><h3>可观测性</h3><p>Agent 追踪、失败分类、多步运行的诊断。</p></div>
+  </div>
+
+  <h2 id="projects">项目</h2>
+  <div class="cards">
+    <!-- 换成你真实的仓库 -->
+    <div class="card"><h3><a href="https://github.com/Ursasi/project-one">project-one</a></h3><p>一句话说明它做什么、给谁用。</p></div>
+    <div class="card"><h3><a href="https://github.com/Ursasi/project-two">project-two</a></h3><p>一句话说明它做什么、给谁用。</p></div>
+  </div>
+
+  <h2 id="toolbox">工具箱</h2>
+  <div class="group"><b>Agent &amp; LLM</b></div>
+  <div class="tags">
+    <span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">MCP</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span>
+  </div>
+  <div class="group" style="margin-top:16px"><b>语言</b></div>
+  <div class="tags"><span class="tag">TypeScript</span><span class="tag">Go</span></div>
+  <div class="group" style="margin-top:16px"><b>基础设施</b></div>
+  <div class="tags"><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">PostgreSQL</span></div>
+
+  <h2 id="contact">联系</h2>
+  <div class="card"><p><a href="mailto:zshprint@163.com">zshprint@163.com</a> · <a href="https://github.com/Ursasi">GitHub</a></p></div>
+
+  <footer>Ursasi · built with plain HTML, hosted on GitHub Pages</footer>
+
+</div>
+</body>
+</html>
