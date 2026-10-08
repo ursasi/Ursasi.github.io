@@ -1,112 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f7f9">
+<meta name="description" content="Ursasi 的个人主页。">
+<title>Ursasi</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta name="theme-color" content="#0b1220">
-<title>Ursasi · Agent Systems</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5/index.min.css">
 <style>
-  :root {
-    --bg: #0b1220;
-    --bg2: #101c33;
-    --card: #111f38;
-    --line: #1e293b;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #93c5fd;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: linear-gradient(160deg, var(--bg), var(--bg2));
-    color: var(--text);
-    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 80px; }
-
-  nav { display: flex; gap: 24px; padding: 24px 0; font-size: 15px; }
-  nav a { color: var(--muted); text-decoration: none; }
-  nav a:hover { color: var(--accent); }
-
-  header { padding: 48px 0 40px; }
-  header h1 { font-size: 42px; font-weight: 700; letter-spacing: -0.5px; }
-  header p { margin-top: 12px; font-size: 18px; color: var(--muted); max-width: 640px; }
-  header .hl { color: var(--accent); }
-
-  .banner { width: 100%; border-radius: 14px; border: 1px solid var(--line); margin: 8px 0 40px; display: block; }
-
-  h2 { font-size: 22px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
-
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } header h1 { font-size: 32px; } }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
-  .card h3 { font-size: 16px; margin-bottom: 6px; }
-  .card p { font-size: 14.5px; color: var(--muted); }
-  .card a { color: var(--accent); text-decoration: none; }
-  .card a:hover { text-decoration: underline; }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-  .tag {
-    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
-    padding: 6px 16px; font-size: 14px; color: var(--text);
-  }
-  .group { margin-bottom: 14px; font-size: 14px; color: var(--muted); }
-  .group b { color: var(--text); font-weight: 600; }
-
-  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
-  footer a { color: var(--accent); text-decoration: none; }
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#202a29;--muted:#606e6a;--line:#e5eae7;--accent:#13795b;--hover:#f3f8f5;color-scheme:light}
+html[data-theme=dark]{--bg:#151b19;--panel:#1c2421;--fg:#e5ece8;--muted:#a8b9b0;--line:#303d36;--accent:#8ed7b5;--hover:#26372e;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}body{min-height:100dvh;background:var(--bg);color:var(--fg);font:15px/1.65 "Geist Variable",-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a,button{transition:color .18s,background .18s}a:hover,button:hover{color:var(--accent)}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.wrap{max-width:1040px;margin:auto;padding:0 36px}nav{display:flex;align-items:center;gap:24px;min-height:86px;border-bottom:1px solid var(--line)}.home{font-weight:650;letter-spacing:-.03em}.links{margin-left:auto;display:flex;align-items:center;gap:20px;color:var(--muted)}.icon{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--muted);cursor:pointer}.icon:hover{background:var(--hover)}.icon svg{width:18px;height:18px}.theme svg{fill:none;stroke:currentColor;stroke-width:1.6}main{padding-top:100px}h1{font-size:clamp(48px,8vw,80px);font-weight:600;letter-spacing:-.055em;line-height:1.1}.skip{position:fixed;top:-80px;left:16px;padding:12px;background:var(--panel)}.skip:focus{top:10px}.ic-sun{display:none}html[data-theme=dark] .ic-sun{display:block}html[data-theme=dark] .ic-moon{display:none}@media(max-width:600px){.wrap{padding:0 24px}nav{min-height:76px}.links{gap:12px}main{padding-top:72px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<script>
+try{const theme=localStorage.getItem('radar_theme');if(theme==='dark')document.documentElement.dataset.theme='dark';}catch{}
+</script>
 </head>
 <body>
+<a class="skip" href="#main">跳到内容</a>
 <div class="wrap">
-
-  <nav>
-    <a href="#work">工作</a>
-    <a href="#projects">项目</a>
-    <a href="#toolbox">工具箱</a>
-    <a href="#contact">联系</a>
-    <a href="radar.html">雷达 →</a>
-  </nav>
-
-  <header>
-    <h1>Ursasi</h1>
-    <p>专注 <span class="hl">LLM Agent</span> —— 工具调用、编排、评测，以及让 Agent 可靠到值得信任。</p>
-  </header>
-
-  <img class="banner" src="agent-loop.svg" alt="Agent loop: plan → act → observe → evaluate">
-
-  <h2 id="work">当前工作</h2>
-  <div class="cards">
-    <div class="card"><h3>Agent 运行时</h3><p>规划 / 工具调用循环、上下文窗口管理、Agent 记忆。</p></div>
-    <div class="card"><h3>工具使用 &amp; MCP</h3><p>工具集成、沙箱执行、协议层的管道工作。</p></div>
-    <div class="card"><h3>评测</h3><p>Prompt 与工具行为的回归测试、基于 trace 的调试。</p></div>
-    <div class="card"><h3>可观测性</h3><p>Agent 追踪、失败分类、多步运行的诊断。</p></div>
-  </div>
-
-  <h2 id="projects">项目</h2>
-  <div class="cards">
-    <div class="card"><h3><a href="radar.html">AI 项目雷达</a></h3><p>每小时扫 21 个 GitHub 话题（Agent / Infra / 安全），按星数增速排序，含 1h、24h、7d 涨速、走势图与评分。</p></div>
-    <!-- 换成你真实的仓库 -->
-    <div class="card"><h3><a href="https://github.com/Ursasi/project-one">project-one</a></h3><p>一句话说明它做什么、给谁用。</p></div>
-  </div>
-
-  <h2 id="toolbox">工具箱</h2>
-  <div class="group"><b>Agent &amp; LLM</b></div>
-  <div class="tags">
-    <span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">MCP</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span>
-  </div>
-  <div class="group" style="margin-top:16px"><b>语言</b></div>
-  <div class="tags"><span class="tag">TypeScript</span><span class="tag">Go</span></div>
-  <div class="group" style="margin-top:16px"><b>基础设施</b></div>
-  <div class="tags"><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">PostgreSQL</span></div>
-
-  <h2 id="contact">联系</h2>
-  <div class="card"><p><a href="mailto:zshprint@163.com">zshprint@163.com</a> · <a href="https://github.com/Ursasi">GitHub</a></p></div>
-
-  <footer>Ursasi · built with plain HTML, hosted on GitHub Pages</footer>
-
+<nav aria-label="主导航"><a class="home" href="./" aria-current="page">Ursasi</a><div class="links"><a href="radar.html">源望 ↗</a><a class="icon" href="https://github.com/ursasi" target="_blank" rel="noopener noreferrer" aria-label="Ursasi 的 GitHub 主页" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297a12 12 0 0 0-3.793 23.385c.6.111.82-.261.82-.577v-2.234c-3.338.726-4.043-1.416-4.043-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.303-5.467-1.334-5.467-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 0 1 6.006 0c2.291-1.552 3.297-1.23 3.297-1.23.654 1.652.243 2.873.12 3.176.769.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.625-5.479 5.922.43.372.823 1.102.823 2.222v3.293c0 .319.216.694.825.576A12 12 0 0 0 12 .297Z"/></svg></a><button class="icon theme" id="themeBtn" type="button" aria-label="切换主题" title="切换明暗主题"><svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg><svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></nav>
+<main id="main"><h1>Ursasi</h1></main>
 </div>
+<script>
+function setTheme(theme){document.documentElement.dataset.theme=theme;document.querySelector('meta[name="theme-color"]').content=theme==='dark'?'#151b19':'#f6f7f9';try{localStorage.setItem('radar_theme',theme);}catch{}}
+setTheme(document.documentElement.dataset.theme);
+document.getElementById('themeBtn').onclick=()=>setTheme(document.documentElement.dataset.theme==='light'?'dark':'light');
+</script>
 </body>
 </html>
