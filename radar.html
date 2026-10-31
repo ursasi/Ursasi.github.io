@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-q6k4vL7QNyT3hGBmICwTFiI1jLorseLWEQTtU+/8hIE=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-FClV+3Nze0TtRU5yeG7T1YZrtRGYb6DLeH4OAfdOxL0=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>源望 · AI 开源与研究观察</title>
@@ -131,7 +131,8 @@ button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{
  .deck-bar .segmented button{min-height:32px;padding:5px 13px}
  .deck-progress{margin-left:auto;font:11px var(--mono);color:var(--dim);font-variant-numeric:tabular-nums}
  body.deck-on .panel>.card,body.deck-on .panel>.sigs{display:none}
- body.deck-on .deck,body.deck-on .deck-nav{display:block}
+ body.deck-on .deck{display:block}
+ body.deck-on .deck-nav{display:flex}
  .deck{position:relative;height:calc(100dvh - 268px);min-height:340px;max-height:640px;margin:0 0 8px}
  .deck-stack{position:absolute;inset:0}
  .deck-card{position:absolute;inset:0;display:flex;flex-direction:column;gap:12px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-lift);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;will-change:transform;transition:transform .26s ease-out,opacity .26s ease-out}
@@ -171,7 +172,9 @@ button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{
  .deck-hint{position:absolute;top:44%;z-index:32;margin-top:-16px;padding:8px 14px;border-radius:999px;font:600 12px var(--mono);letter-spacing:.04em;background:color-mix(in srgb,var(--neon) 12%,var(--panel));color:var(--neon);opacity:0;pointer-events:none;transition:opacity .1s}
  .deck-hint.l{left:20px}
  .deck-hint.r{right:20px;background:color-mix(in srgb,var(--amber) 16%,var(--panel));color:var(--amber)}
- .deck-grab{position:absolute;left:50%;transform:translateX(-50%);z-index:33;display:none;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);box-shadow:0 2px 12px #102b2018;color:var(--muted);font-size:11px;white-space:nowrap;touch-action:none;user-select:none;-webkit-user-select:none}
+ .deck-grab{display:none;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--muted);font-size:11px;white-space:nowrap;touch-action:none;user-select:none;-webkit-user-select:none}
+ .deck-grab[hidden]{display:none}
+ .deck-nav-row{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%}
  .dc-source{margin-top:6px;padding-top:14px;border-top:1px dashed var(--line2)}
  .dc-source[hidden]{display:none}
  .dc-src-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -194,9 +197,10 @@ button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{
  body.deck-on .deck-card{inset:0;border:0;border-radius:0;box-shadow:none;background:var(--panel);padding:calc(env(safe-area-inset-top) + 62px) 20px calc(env(safe-area-inset-bottom) + 104px)}
  body.deck-on .deck-card[data-pos="1"]{transform:none;opacity:0;pointer-events:none}
  body.deck-on .deck-card[data-pos="2"]{transform:none;opacity:0;pointer-events:none}
- body.deck-on .deck-nav{position:absolute;left:0;right:0;bottom:0;z-index:33;margin:0;padding:74px 16px calc(env(safe-area-inset-bottom) + 14px);background:linear-gradient(transparent,var(--panel) 20%)}
+ body.deck-on .deck-nav{position:absolute;left:0;right:0;bottom:0;z-index:33;margin:0;padding:26px 16px calc(env(safe-area-inset-bottom) + 14px);flex-direction:column;gap:10px;align-items:center;background:linear-gradient(transparent,var(--panel) 14%)}
+ body.deck-on .deck-grab:not([hidden]){display:inline-flex}
+ body.deck-on .deck-grab{box-shadow:0 2px 12px #102b2018}
  body.deck-on .deck-nav button{border-color:var(--line2);background:color-mix(in srgb,var(--fg) 4%,var(--panel))}
- body.deck-on .deck-grab{display:inline-flex;bottom:calc(env(safe-area-inset-bottom) + 84px)}
  body.deck-on .deck-card{padding-bottom:calc(env(safe-area-inset-bottom) + 148px)}
 }
 </style>
@@ -251,7 +255,7 @@ window.addEventListener('error', showLoadFailure);
 </div>
 <div class="deck-bar" id="deckBar"><div class="segmented" role="group" aria-label="Discover 视图"><button type="button" data-deck-view="cards">卡片</button><button type="button" data-deck-view="list">列表</button></div><span class="deck-progress" id="deckProgress"></span></div>
 <div class="deck" id="deck" aria-live="polite"></div>
-<div class="deck-nav" id="deckNav"><button type="button" data-deck-step="-1">‹ 上一张</button><span class="deck-tip">左右滑动切换</span><button type="button" data-deck-step="1">下一张 ›</button></div>
+<div class="deck-nav" id="deckNav"><button type="button" class="deck-grab" id="deckGrab" hidden>▲ 上滑看原文</button><div class="deck-nav-row"><button type="button" data-deck-step="-1">‹ 上一张</button><span class="deck-tip">左右滑动切换</span><button type="button" data-deck-step="1">下一张 ›</button></div></div>
 <div class="card"><table aria-label="Discover"><thead><tr><th>#</th><th>项目与用途</th><th class="num h-spark">48h 走势</th><th class="num" data-k="stars" tabindex="0">Stars</th><th class="num h-d1" data-k="d1h" tabindex="0">1h 新增</th><th class="num" data-k="d24h" tabindex="0">24h 新增</th><th class="num h-d7" data-k="d7d" tabindex="0">7d 新增</th><th class="num" data-k="score" tabindex="0">发现分</th><th scope="col" class="item-actions-cell">操作</th></tr></thead><tbody id="tb"></tbody></table></div>
 </section>
 <div id="sourcePanels"></div>
@@ -857,7 +861,9 @@ function drawDeck(){
     deckProgress.textContent = `${items.length} / ${items.length}`; return; }
   const cur = items[deckIdx], curRow = cur && (cur.row || cur);
   const hasSrc = !!(curRow && (curRow.context || []).some(c => c && c.text && c.label !== 'GitHub 公开仓库信息'));
-  deckNode.innerHTML = `<div class="deck-stack">${deckCardHtml(items[deckIdx + 2], 2, deckIdx + 2)}${deckCardHtml(items[deckIdx + 1], 1, deckIdx + 1)}${deckCardHtml(items[deckIdx], 0, deckIdx)}</div><span class="deck-hint l" aria-hidden="true">← 下一张</span><span class="deck-hint r" aria-hidden="true">收藏 →</span>${hasSrc ? '<button type="button" class="deck-grab" id="deckGrab" aria-expanded="false">▲ 上滑看原文</button>' : ''}`;
+  deckNode.innerHTML = `<div class="deck-stack">${deckCardHtml(items[deckIdx + 2], 2, deckIdx + 2)}${deckCardHtml(items[deckIdx + 1], 1, deckIdx + 1)}${deckCardHtml(items[deckIdx], 0, deckIdx)}</div><span class="deck-hint l" aria-hidden="true">← 下一张</span><span class="deck-hint r" aria-hidden="true">收藏 →</span>`;
+  const grab = document.getElementById('deckGrab');
+  if (grab) { grab.hidden = !hasSrc; grab.textContent = '▲ 上滑看原文'; grab.setAttribute('aria-expanded', 'false'); }
   deckProgress.textContent = `${deckIdx + 1} / ${items.length}`;
 }
 function deckStep(dir){
@@ -887,12 +893,6 @@ function deckToggleSource(open){
 let deckDrag = null, grabDrag = null;
 const deckHints = () => ({ l: deckNode.querySelector('.deck-hint.l'), r: deckNode.querySelector('.deck-hint.r') });
 deckNode.addEventListener('pointerdown', e => {
-  const grab = e.target.closest('.deck-grab');
-  if (grab) {
-    grabDrag = { y: e.clientY, id: e.pointerId };
-    try { grab.setPointerCapture(e.pointerId); } catch (err) {}
-    return;
-  }
   const card = e.target.closest('.deck-card');
   if (!card || card.dataset.pos !== '0' || e.target.closest('a,button,summary')) return;
   deckDrag = { card, x: e.clientX, y: e.clientY, dx: 0, id: e.pointerId };
@@ -900,10 +900,6 @@ deckNode.addEventListener('pointerdown', e => {
   try { card.setPointerCapture(e.pointerId); } catch (err) {}
 });
 deckNode.addEventListener('pointermove', e => {
-  if (grabDrag && e.pointerId === grabDrag.id) {
-    if (e.clientY - grabDrag.y < -36) { grabDrag = null; deckToggleSource(true); }
-    return;
-  }
   if (!deckDrag || e.pointerId !== deckDrag.id) return;
   deckDrag.dx = e.clientX - deckDrag.x;
   if (Math.abs(deckDrag.dx) < 6) return;
@@ -927,9 +923,21 @@ function deckRelease(fly){
     setTimeout(() => deckStep(1), matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 230);
   } else { card.style.transform = ''; }
 }
-deckNode.addEventListener('pointerup', e => {
-  if (grabDrag && e.pointerId === grabDrag.id) { grabDrag = null; deckToggleSource(); return; }
-  if (deckDrag && e.pointerId === deckDrag.id) deckRelease(true);
+deckNode.addEventListener('pointerup', e => { if (deckDrag && e.pointerId === deckDrag.id) deckRelease(true); });
+// 把手在自己的导航条里：上滑或点击都能展开原文
+deckNav.addEventListener('pointerdown', e => {
+  const grab = e.target.closest('.deck-grab');
+  if (!grab) return;
+  grabDrag = { y: e.clientY, id: e.pointerId };
+  try { grab.setPointerCapture(e.pointerId); } catch (err) {}
+});
+deckNav.addEventListener('pointermove', e => {
+  if (!grabDrag || e.pointerId !== grabDrag.id) return;
+  if (e.clientY - grabDrag.y < -30) { grabDrag = null; deckToggleSource(true); }
+});
+deckNav.addEventListener('pointerup', e => {
+  if (!grabDrag || e.pointerId !== grabDrag.id) return;
+  grabDrag = null; deckToggleSource();
 });
 deckNode.addEventListener('pointercancel', () => deckRelease(false));
 deckMedia.addEventListener('change', () => { deckSync(); drawDeck(); });
