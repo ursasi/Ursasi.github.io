@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-SD13CUeYvGefoWm5lhryi+ZaYDT/fm6iSgQpjreH/IA=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-g+otCIQ1hsywXLUkbQB4QBal3IazdbtaKiLZRyvthPo=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>源望 · AI 开源与研究观察</title>
@@ -777,7 +777,7 @@ function deckSync(){
 }
 function deckMount(){
   const panel = document.getElementById('panel-' + tabNow);
-  if (!panel || deckNode.parentElement === panel) return;
+  if (!panel || panel.firstElementChild === deckBar) return;
   panel.prepend(deckNav); panel.prepend(deckNode); panel.prepend(deckBar);
 }
 function deckItems(){
