@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-NCKT6UORm92z3DMiGeoCs4rLvdMqUz6KA8E5/Z+5B6Y=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
+<meta http-equiv="Content-Security-Policy" content="default-src &#x27;none&#x27;; script-src &#x27;sha256-G7JzQhxZvYSPYl6vkwpfoxaUS7R6aQgni+4hvKvajYs=&#x27; &#x27;sha256-q6k4vL7QNyT3hGBmICwTFiI1jLorseLWEQTtU+/8hIE=&#x27;; style-src &#x27;unsafe-inline&#x27; https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src data:; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; frame-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>源望 · AI 开源与研究观察</title>
@@ -168,6 +168,18 @@ button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{
  .deck-card .summary-toggle{display:none}
  .deck-card .ai-note{margin:0}
  .deck-card .item-footer{margin-top:14px}
+ .deck-hint{position:absolute;top:44%;z-index:32;margin-top:-16px;padding:8px 14px;border-radius:999px;font:600 12px var(--mono);letter-spacing:.04em;background:color-mix(in srgb,var(--neon) 12%,var(--panel));color:var(--neon);opacity:0;pointer-events:none;transition:opacity .1s}
+ .deck-hint.l{left:20px}
+ .deck-hint.r{right:20px;background:color-mix(in srgb,var(--amber) 16%,var(--panel));color:var(--amber)}
+ .deck-grab{position:absolute;left:50%;transform:translateX(-50%);z-index:33;display:none;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--line2);border-radius:999px;background:color-mix(in srgb,var(--fg) 4%,var(--panel));color:var(--muted);font-size:11px;white-space:nowrap;touch-action:none;user-select:none;-webkit-user-select:none}
+ .dc-source{margin-top:6px;padding-top:14px;border-top:1px dashed var(--line2)}
+ .dc-source[hidden]{display:none}
+ .dc-src-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+ .dc-src-head b{font-size:12px;color:var(--fg)}
+ .dc-src-head button{margin-left:auto;border:1px solid var(--line2);background:none;color:var(--muted);border-radius:var(--r-ctl);padding:5px 10px;font-size:11px}
+ .dc-src-label{margin:14px 0 5px;font-size:10px;color:var(--dim);letter-spacing:.02em}
+ .dc-src-label a{color:var(--neon)}
+ .dc-src-text{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.85 var(--mono);color:var(--muted);max-height:none}
 
  /* ===== 全屏卡片：卡片就是整个屏幕，其他元素全部隐藏 ===== */
  body.deck-on{overflow:hidden}
@@ -184,6 +196,8 @@ button:focus-visible,summary:focus-visible,a:focus-visible,select:focus-visible{
  body.deck-on .deck-card[data-pos="2"]{transform:none;opacity:0;pointer-events:none}
  body.deck-on .deck-nav{position:absolute;left:0;right:0;bottom:0;z-index:33;margin:0;padding:26px 16px calc(env(safe-area-inset-bottom) + 14px);background:linear-gradient(transparent,var(--panel) 52%)}
  body.deck-on .deck-nav button{border-color:var(--line2);background:color-mix(in srgb,var(--fg) 4%,var(--panel))}
+ body.deck-on .deck-grab{display:inline-flex;bottom:calc(env(safe-area-inset-bottom) + 84px)}
+ body.deck-on .deck-card{padding-bottom:calc(env(safe-area-inset-bottom) + 148px)}
 }
 </style>
 </head>
@@ -802,6 +816,11 @@ function redrawActive(){
   else if (tabNow === 'saved') drawFavorites();
   else { const source = sourceTabs.find(s => s.id === tabNow); if (source) drawSignals(source); }
 }
+function deckSource(row){
+  const entries = (row.context || []).filter(c => c && c.text && c.label !== 'GitHub 公开仓库信息');
+  if (!entries.length) return '';
+  return `<div class="dc-source" hidden><div class="dc-src-head"><b>原文与背景</b><button type="button" data-src-close="1">收起</button></div>${entries.map(c => `<p class="dc-src-label">${esc(c.label)}${c.url ? ` · <a href="${safeUrl(c.url)}" target="_blank" rel="noopener">原始链接</a>` : ''}</p><pre class="dc-src-text">${esc(c.text)}</pre>`).join('')}</div>`;
+}
 function deckCardHtml(item, pos, index){
   if (!item) return '';
   const row = item.row || item, tab = item.row ? (item.tab || 'saved') : tabNow;
@@ -822,7 +841,7 @@ function deckCardHtml(item, pos, index){
     <div class="dc-ai">${aiNote(row)}</div>
     <footer class="dc-actions">${itemActions(row, 'rank')}<a class="det-btn" href="${safeUrl(row.url)}" target="_blank" rel="noopener">打开 GitHub →</a></footer>`);
   const soft2 = soft && row.title ? `<div class="dc-top"><span class="src">${esc(row.publisher || sourceLabels[row.source] || row.source || '')}</span></div>` : '';
-  return `<article class="deck-card" data-pos="${pos}"${row.name && !row.title ? ` data-name="${esc(row.name)}"` : ''}>${soft2}${inner}</article>`;
+  return `<article class="deck-card" data-pos="${pos}"${row.name && !row.title ? ` data-name="${esc(row.name)}"` : ''}>${soft2}${inner}${soft ? '' : deckSource(row)}</article>`;
 }
 function drawDeck(){
   deckSync();
@@ -836,7 +855,9 @@ function drawDeck(){
   if (deckIdx >= items.length) {
     deckNode.innerHTML = `<div class="deck-card" data-pos="0"><div class="dc-end"><b>这一轮看完了</b>共 ${items.length} 张卡片。<br><button type="button" data-deck-restart="1">从头再看</button><button type="button" data-deck-view="list">回到列表</button></div></div>`;
     deckProgress.textContent = `${items.length} / ${items.length}`; return; }
-  deckNode.innerHTML = `<div class="deck-stack">${deckCardHtml(items[deckIdx + 2], 2, deckIdx + 2)}${deckCardHtml(items[deckIdx + 1], 1, deckIdx + 1)}${deckCardHtml(items[deckIdx], 0, deckIdx)}</div>`;
+  const cur = items[deckIdx], curRow = cur && (cur.row || cur);
+  const hasSrc = !!(curRow && (curRow.context || []).some(c => c && c.text && c.label !== 'GitHub 公开仓库信息'));
+  deckNode.innerHTML = `<div class="deck-stack">${deckCardHtml(items[deckIdx + 2], 2, deckIdx + 2)}${deckCardHtml(items[deckIdx + 1], 1, deckIdx + 1)}${deckCardHtml(items[deckIdx], 0, deckIdx)}</div><span class="deck-hint l" aria-hidden="true">← 下一张</span><span class="deck-hint r" aria-hidden="true">收藏 →</span>${hasSrc ? '<button type="button" class="deck-grab" id="deckGrab" aria-expanded="false">▲ 上滑看原文</button>' : ''}`;
   deckProgress.textContent = `${deckIdx + 1} / ${items.length}`;
 }
 function deckStep(dir){
@@ -845,8 +866,33 @@ function deckStep(dir){
   deckIdx = Math.max(0, Math.min(items.length, deckIdx + dir));
   drawDeck();
 }
-let deckDrag = null;
+function deckFavoriteCurrent(){
+  const items = deckItems(), item = items[deckIdx];
+  if (!item) return;
+  const row = item.row || item, tab = item.row ? (item.tab || 'saved') : tabNow;
+  try {
+    if (!favoriteStore) favoriteStore = new RadarFavorites(window.localStorage);
+    if (!favorites.some(f => f.id === itemKey(row))) { favoriteStore.save(row, tab); refreshFavorites(); }
+  } catch (err) {}
+}
+function deckToggleSource(open){
+  const card = deckNode.querySelector('.deck-card[data-pos="0"]');
+  const src = card && card.querySelector('.dc-source'), grab = document.getElementById('deckGrab');
+  if (!src) return;
+  const show = open === undefined ? src.hidden : open;
+  src.hidden = !show;
+  if (grab) { grab.textContent = show ? '▼ 收起原文' : '▲ 上滑看原文'; grab.setAttribute('aria-expanded', String(show)); }
+  if (show) card.scrollTo({top: Math.max(0, src.offsetTop - 62), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+}
+let deckDrag = null, grabDrag = null;
+const deckHints = () => ({ l: deckNode.querySelector('.deck-hint.l'), r: deckNode.querySelector('.deck-hint.r') });
 deckNode.addEventListener('pointerdown', e => {
+  const grab = e.target.closest('.deck-grab');
+  if (grab) {
+    grabDrag = { y: e.clientY, id: e.pointerId };
+    try { grab.setPointerCapture(e.pointerId); } catch (err) {}
+    return;
+  }
   const card = e.target.closest('.deck-card');
   if (!card || card.dataset.pos !== '0' || e.target.closest('a,button,summary')) return;
   deckDrag = { card, x: e.clientX, y: e.clientY, dx: 0, id: e.pointerId };
@@ -854,23 +900,37 @@ deckNode.addEventListener('pointerdown', e => {
   try { card.setPointerCapture(e.pointerId); } catch (err) {}
 });
 deckNode.addEventListener('pointermove', e => {
+  if (grabDrag && e.pointerId === grabDrag.id) {
+    if (e.clientY - grabDrag.y < -36) { grabDrag = null; deckToggleSource(true); }
+    return;
+  }
   if (!deckDrag || e.pointerId !== deckDrag.id) return;
   deckDrag.dx = e.clientX - deckDrag.x;
   if (Math.abs(deckDrag.dx) < 6) return;
   deckDrag.card.style.transform = `translateX(${deckDrag.dx}px) rotate(${(deckDrag.dx / 26).toFixed(2)}deg)`;
+  const h = deckHints(), k = Math.min(1, Math.abs(deckDrag.dx) / 110);
+  if (h.l) h.l.style.opacity = deckDrag.dx < 0 ? k : 0;
+  if (h.r) h.r.style.opacity = deckDrag.dx > 0 ? k : 0;
 });
 function deckRelease(fly){
+  const h = deckHints();
+  if (h.l) h.l.style.opacity = 0;
+  if (h.r) h.r.style.opacity = 0;
   if (!deckDrag) return;
   const { card, dx } = deckDrag; deckDrag = null;
   card.classList.remove('dragging');
   const dir = dx < 0 ? -1 : 1;
   if (fly && Math.abs(dx) > 84) {
+    if (dx > 0) deckFavoriteCurrent();
     card.classList.add('gone');
     card.style.transform = `translateX(${dir * 130}%) rotate(${dir * 16}deg)`;
     setTimeout(() => deckStep(1), matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 230);
   } else { card.style.transform = ''; }
 }
-deckNode.addEventListener('pointerup', e => { if (deckDrag && e.pointerId === deckDrag.id) deckRelease(true); });
+deckNode.addEventListener('pointerup', e => {
+  if (grabDrag && e.pointerId === grabDrag.id) { grabDrag = null; deckToggleSource(); return; }
+  if (deckDrag && e.pointerId === deckDrag.id) deckRelease(true);
+});
 deckNode.addEventListener('pointercancel', () => deckRelease(false));
 deckMedia.addEventListener('change', () => { deckSync(); drawDeck(); });
 document.addEventListener('click', e => {
@@ -883,13 +943,16 @@ document.addEventListener('click', e => {
     return; }
   const stepBtn = e.target.closest('[data-deck-step]');
   if (stepBtn) { deckStep(Number(stepBtn.dataset.deckStep)); return; }
-  if (e.target.closest('[data-deck-restart]')) { deckIdx = 0; drawDeck(); }
+  if (e.target.closest('[data-deck-restart]')) { deckIdx = 0; drawDeck(); return; }
+  if (e.target.closest('[data-src-close]')) { deckToggleSource(false); }
 });
 document.addEventListener('keydown', e => {
   if (!deckOn || !deckMedia.matches) return;
   if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName) || e.target.closest('dialog')) return;
   if (e.key === 'ArrowRight') { e.preventDefault(); deckStep(1); }
   else if (e.key === 'ArrowLeft') { e.preventDefault(); deckStep(-1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); deckToggleSource(true); }
+  else if (e.key === 'ArrowDown') { e.preventDefault(); deckToggleSource(false); }
 });
 // ---- 独立来源页面 ----
 const posts = (DATA.signals || []).filter(p => !['Labs','Trending'].includes(p.source) && (p.source !== 'GFI' || Number.isInteger(p.stars) && p.stars >= 600));
